@@ -41,8 +41,9 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.activity:activity-ktx:1.8.2")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.activity:activity-ktx:1.8.2")
 }
 
 configurations.all {
@@ -53,8 +54,9 @@ configurations.all {
             "androidx.appcompat:appcompat:1.6.1",
             "com.google.android.material:material:1.11.0",
             "androidx.constraintlayout:constraintlayout:2.1.4",
-            "androidx.activity:activity:1.8.2",
-            "androidx.fragment:fragment:1.6.2"
+            "androidx.viewpager2:viewpager2:1.0.0",
+            "androidx.fragment:fragment:1.6.2",
+            "androidx.activity:activity:1.8.2"
         )
     }
 }

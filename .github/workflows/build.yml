@@ -1,4 +1,4 @@
-name: Build Keepit — XML Fixe
+name: Build Keepit — 3-Ecrans
 on:
   push:
     branches: [main]
@@ -24,9 +24,9 @@ jobs:
       - name: Compiler APK
         run: ./gradlew clean assembleDebug --no-daemon
 
-      - name: Telecharger APK
+      - name: APK Pret
         uses: actions/upload-artifact@v4
         with:
-          name: Keepit-APK-Final
+          name: Keepit-3-Ecrans
           path: app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30

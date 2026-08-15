@@ -1,128 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF0F5"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:background="#FFF0F5">
 
-    <LinearLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:spacing="16dp">
+        android:background="#FF1493"
+        app:tabTextColor="#FFFFFF"
+        app:tabSelectedTextColor="#FFFFFF"
+        app:tabIndicatorColor="#FFFFFF"
+        app:tabMode="fixed"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Keepit 🔒"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:textColor="#FF1493"
-            android:layout_marginTop="16dp"/>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-        <TextView
-            android:id="@+id/tvTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="⏰ --:--:--"
-            android:textSize="14sp"
-            android:textColor="#888888"/>
-
-        <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🔄 Initialisation..."
-            android:textSize="16sp"
-            android:textColor="#FF1493"
-            android:padding="8dp"
-            android:background="#FFF0F5"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:id="@+id/tvSpeed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🚀 Vitesse : -- km/h"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#2196F3"
-            android:gravity="center"
-            android:padding="12dp"
-            android:background="#E3F2FD"/>
-
-        <TextView
-            android:id="@+id/tvLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="📍 Position : --"
-            android:textSize="14sp"
-            android:textColor="#666666"
-            android:gravity="center"
-            android:padding="8dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🔒 Espace Securise"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#FF1493"
-            android:layout_marginTop="8dp"/>
-
-        <EditText
-            android:id="@+id/etNote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tape une note ou un message secret..."
-            android:minLines="4"
-            android:background="#FFFFFF"
-            android:padding="12dp"
-            android:textColor="#333333"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:spacing="8dp">
-
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Sauvegarder"
-                android:backgroundTint="#4CAF50"
-                android:textColor="#FFFFFF"/>
-
-            <Button
-                android:id="@+id/btnClear"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Effacer"
-                android:backgroundTint="#F44336"
-                android:textColor="#FFFFFF"/>
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnHide"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mode Discret"
-            android:backgroundTint="#212121"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Keepit — Securite et Discretion"
-            android:textSize="12sp"
-            android:textColor="#AAAAAA"
-            android:layout_marginTop="24dp"/>
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>
