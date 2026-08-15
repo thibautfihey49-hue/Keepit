@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var recordAudioPermission: ActivityResultLauncher<String>
     lateinit var cameraPermission: ActivityResultLauncher<String>
     private var pendingPhotoFile: File? = null
+    var lastPhotoUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,7 +146,7 @@ class MainActivity : AppCompatActivity() {
 
     fun getContacts(): JSONArray = JSONArray(prefs.getString("contacts", "[]"))
 
-    fun takePhotoIntent() {
+    fun dispatchTakePictureIntent() {
         val photoDir = File(filesDir, "photos")
         photoDir.mkdirs()
         pendingPhotoFile = File(photoDir, "photo_${System.currentTimeMillis()}.jpg")
@@ -161,9 +162,9 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1002 && resultCode == RESULT_OK) {
             pendingPhotoFile?.let { file ->
-                val uri = Uri.fromFile(file).toString()
+                lastPhotoUri = Uri.fromFile(file)
                 supportFragmentManager.findFragmentById(R.id.viewPager)?.let { frag ->
-                    (frag as? JournalFragment)?.onImagePicked(Uri.parse(uri))
+                    (frag as? JournalFragment)?.onImagePicked(lastPhotoUri!!)
                 }
             }
         }
@@ -281,7 +282,7 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
 
     private fun takePhoto() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            (activity as MainActivity).takePhotoIntent()
+            (activity as MainActivity).dispatchTakePictureIntent()
         } else {
             (activity as MainActivity).cameraPermission.launch(Manifest.permission.CAMERA)
         }

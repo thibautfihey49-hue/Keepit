@@ -1,4 +1,4 @@
-name: Build Keepit — Syntax-Fixed
+name: Build Keepit — Camera-Fixed
 on:
   push:
     branches: [main]
@@ -27,6 +27,6 @@ jobs:
       - name: APK Generee
         uses: actions/upload-artifact@v4
         with:
-          name: Keepit-Final
+          name: Keepit-Camera-Fixed
           path: app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
