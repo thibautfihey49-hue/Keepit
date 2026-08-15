@@ -1,4 +1,4 @@
-name: Build Keepit — Complet
+name: Build Keepit — XML Fixe
 on:
   push:
     branches: [main]
@@ -10,24 +10,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 🪄 Télécharger gradle-wrapper.jar
+      - name: Telecharger gradle-wrapper.jar
         run: |
           mkdir -p gradle/wrapper
           curl -fsSL -o gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.5.0/gradle/wrapper/gradle-wrapper.jar
           chmod +x gradlew
-          ls -la gradle/wrapper/
 
       - uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: 🔨 Compiler APK
+      - name: Compiler APK
         run: ./gradlew clean assembleDebug --no-daemon
 
-      - name: 📦 Télécharger APK
+      - name: Telecharger APK
         uses: actions/upload-artifact@v4
         with:
-          name: Keepit-APK-Complet
+          name: Keepit-APK-Final
           path: app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30

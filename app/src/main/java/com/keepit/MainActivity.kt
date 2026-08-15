@@ -2,7 +2,6 @@ package com.keepit
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -22,13 +21,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnHide: Button
     private lateinit var tvTime: TextView
 
-    private var lastLocation: Location? = null
     private var isDiscreetMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         initViews()
         setupButtons()
         updateTime()
@@ -65,9 +62,7 @@ class MainActivity : AppCompatActivity() {
             tvStatus.setTextColor(0xFF2196F3.toInt())
         }
 
-        btnHide.setOnClickListener {
-            toggleDiscreetMode()
-        }
+        btnHide.setOnClickListener { toggleDiscreetMode() }
     }
 
     private fun toggleDiscreetMode() {
@@ -104,13 +99,6 @@ class MainActivity : AppCompatActivity() {
                 1001
             )
         }
-    }
-
-    fun updateSpeed(location: Location) {
-        lastLocation = location
-        val speedKmh = (location.speed * 3.6).toInt()
-        tvSpeed.text = "🚀 Vitesse : $speedKmh km/h"
-        tvLocation.text = "📍 ${String.format("%.4f", location.latitude)}, ${String.format("%.4f", location.longitude)}"
     }
 
     override fun onRequestPermissionsResult(

@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.Keepit" parent="Theme.Material3.Light.NoActionBar">
-        <item name="colorPrimary">@color/pink</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="android:windowBackground">@color/background</item>
+        <item name="colorPrimary">#FF1493</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:windowBackground">#FFF0F5</item>
     </style>
-    <color name="pink">#FF1493</color>
-    <color name="white">#FFFFFF</color>
-    <color name="background">#FFF0F5</color>
 </resources>
