@@ -176,7 +176,6 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
     private lateinit var btnImage: Button
     private lateinit var btnCamera: Button
 
-    // ✅ TOUTES en VAR — pas de val
     private var selectedImageUri: String? = null
     private var voiceFilePath: String? = null
     private var recorder: MediaRecorder? = null
@@ -277,11 +276,11 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
                 setDataSource(path)
                 prepare()
                 start()
-                setOnCompletionListener { isPlaying = false; mediaPlayer = null; Toast.makeText(requireContext(), "✅ Termine !", Toast.LENGTH_SHORT).show() }
+                setOnCompletionListener { mediaPlayer = null; isPlaying = false }
             }
             isPlaying = true
-            Toast.makeText(requireContext(), "▶️ Lecture...", Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) { Toast.makeText(requireContext(), "❌ Erreur : ${e.message}", Toast.LENGTH_SHORT).show() }
+            Toast.makeText(requireContext(), "▶️ Lecture en cours...", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) { Toast.makeText(requireContext(), "❌ Erreur lecture : ${e.message}", Toast.LENGTH_SHORT).show() }
     }
 
     private fun loadNotes() { filterNotes("") }
@@ -315,8 +314,9 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
                 btnPlay.setOnClickListener { playVoiceNote(voicePath) }
             }
 
+            val pos = i
             card.findViewById<Button>(R.id.btnDelete).setOnClickListener {
-                (activity as MainActivity).deleteNote(i)
+                (activity as MainActivity).deleteNote(pos)
                 loadNotes()
                 Toast.makeText(requireContext(), "🗑️ Note supprimee !", Toast.LENGTH_SHORT).show()
             }
@@ -347,14 +347,16 @@ class MessagesFragment : Fragment(R.layout.fragment_messages) {
         android.app.AlertDialog.Builder(requireContext())
             .setTitle("➕ Nouveau Contact")
             .setView(v)
-            .setPositiveButton("Ajouter ✨") { _, _ ->
+            .setPositiveButton("Ajouter") { _, _ ->
                 val name = v.findViewById<EditText>(R.id.etName).text.toString().trim()
                 val num = v.findViewById<EditText>(R.id.etNumber).text.toString().trim()
                 if (name.isNotEmpty() && num.isNotEmpty()) {
                     (activity as MainActivity).saveContact(name, num)
                     loadContacts()
                 }
-            }.show()
+            }
+            .setNegativeButton("Annuler", null)
+            .show()
     }
 
     private fun loadContacts() {
@@ -367,8 +369,9 @@ class MessagesFragment : Fragment(R.layout.fragment_messages) {
             val item = android.view.LayoutInflater.from(requireContext()).inflate(R.layout.item_contact, null)
             item.findViewById<TextView>(R.id.tvName).text = name
             item.findViewById<TextView>(R.id.tvNumber).text = num
+            val pos = i
             item.findViewById<Button>(R.id.btnDeleteContact).setOnClickListener {
-                (activity as MainActivity).deleteContact(i)
+                (activity as MainActivity).deleteContact(pos)
                 loadContacts()
             }
             llContacts.addView(item)
