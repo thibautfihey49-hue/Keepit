@@ -28,13 +28,10 @@ import org.json.JSONObject
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
     private lateinit var prefs: SharedPreferences
     var isMessagingUnlocked = false
-    
-    // ✅ CONSTANTE — JAMAIS MODIFIÉE
     private val SECRET_TRIGGER = "sms"
 
     lateinit var pickImageLauncher: ActivityResultLauncher<String>
@@ -87,7 +84,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun checkSecretCode(content: String) {
-        // ✅ COMPARAISON UNIQUEMENT — SANS MODIFICATION
         if (content.trim().lowercase() == SECRET_TRIGGER && !isMessagingUnlocked) {
             isMessagingUnlocked = true
             setupTabs()
@@ -336,6 +332,7 @@ class MessagesFragment : Fragment(R.layout.fragment_messages) {
         view.findViewById<Button>(R.id.btnAddContact).setOnClickListener { showAddDialog() }
         loadContacts()
     }
+
     private fun showAddDialog() {
         val v = layoutInflater.inflate(R.layout.dialog_add_contact, null)
         android.app.AlertDialog.Builder(requireContext())
@@ -347,6 +344,7 @@ class MessagesFragment : Fragment(R.layout.fragment_messages) {
                 if (n.isNotEmpty() && num.isNotEmpty()) { (activity as MainActivity).saveContact(n, num); loadContacts() }
             }.show()
     }
+
     private fun loadContacts() {
         llContacts.removeAllViews()
         val c = (activity as MainActivity).getContacts()
