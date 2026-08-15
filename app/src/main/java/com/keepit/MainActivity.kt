@@ -45,11 +45,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         prefs = getSharedPreferences("KeepitPrefs", Context.MODE_PRIVATE)
         viewPager = findViewById(R.id.viewPager)
         tabLayout = findViewById(R.id.tabLayout)
-
         setupPermissionLaunchers()
         setupTabs()
     }
@@ -63,7 +61,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
         recordAudioPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (granted) {
                 supportFragmentManager.findFragmentById(R.id.viewPager)?.let { frag ->
@@ -73,13 +70,9 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "❌ Autorisation microphone necessaire", Toast.LENGTH_SHORT).show()
             }
         }
-
         cameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            if (granted) {
-                dispatchTakePictureIntent()
-            } else {
-                Toast.makeText(this, "❌ Autorisation appareil photo necessaire", Toast.LENGTH_SHORT).show()
-            }
+            if (granted) dispatchTakePictureIntent()
+            else Toast.makeText(this, "❌ Autorisation appareil photo necessaire", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -94,7 +87,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun checkSecretCode(content: String) {
-        // ✅ COMPARAISON UNIQUEMENT — SANS AUCUNE MODIFICATION
+        // ✅ COMPARAISON UNIQUEMENT — SANS MODIFICATION
         if (content.trim().lowercase() == SECRET_TRIGGER && !isMessagingUnlocked) {
             isMessagingUnlocked = true
             setupTabs()
@@ -195,7 +188,6 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
     override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefs = requireActivity().getSharedPreferences("KeepitPrefs", Context.MODE_PRIVATE)
-
         llNotes = view.findViewById(R.id.llNotes)
         etTitle = view.findViewById(R.id.etTitle)
         etContent = view.findViewById(R.id.etContent)
@@ -212,7 +204,6 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
         btnSave.setOnClickListener {
             val title = etTitle.text.toString().trim()
             val content = etContent.text.toString().trim()
-            
             if (title.isNotEmpty() || content.isNotEmpty() || !selectedImageUri.isNullOrEmpty() || !voiceFilePath.isNullOrEmpty()) {
                 (activity as MainActivity).saveNote(title, content, selectedImageUri, voiceFilePath)
                 etTitle.text.clear()
@@ -231,19 +222,14 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: android.text.Editable?) {}
         })
-
         loadNotes()
     }
 
     private fun toggleVoiceRecording() {
-        if (isRecording) {
-            stopVoiceRecording()
-        } else {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
-                startVoiceRecording()
-            } else {
-                (activity as MainActivity).recordAudioPermission.launch(Manifest.permission.RECORD_AUDIO)
-            }
+        if (isRecording) stopVoiceRecording()
+        else {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) startVoiceRecording()
+            else (activity as MainActivity).recordAudioPermission.launch(Manifest.permission.RECORD_AUDIO)
         }
     }
 
@@ -252,7 +238,6 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
         audioDir.mkdirs()
         val audioFile = File(audioDir, "note_${System.currentTimeMillis()}.3gp")
         voiceFilePath = audioFile.absolutePath
-
         recorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(requireContext()) else MediaRecorder()
         recorder?.apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -277,58 +262,30 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
         Toast.makeText(requireContext(), "✅ Note vocale prete !", Toast.LENGTH_SHORT).show()
     }
 
-    private fun pickImage() {
-        (activity as MainActivity).pickImageLauncher.launch("image/*")
-    }
-
-    fun onImagePicked(uri: Uri) {
-        selectedImageUri = uri.toString()
-        Toast.makeText(requireContext(), "📷 Image selectionnee ! Sauvegarde la note ✨", Toast.LENGTH_SHORT).show()
-    }
-
+    private fun pickImage() { (activity as MainActivity).pickImageLauncher.launch("image/*") }
+    fun onImagePicked(uri: Uri) { selectedImageUri = uri.toString(); Toast.makeText(requireContext(), "📷 Image selectionnee ! ✨", Toast.LENGTH_SHORT).show() }
     private fun takePhoto() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            (activity as MainActivity).dispatchTakePictureIntent()
-        } else {
-            (activity as MainActivity).cameraPermission.launch(Manifest.permission.CAMERA)
-        }
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) (activity as MainActivity).dispatchTakePictureIntent()
+        else (activity as MainActivity).cameraPermission.launch(Manifest.permission.CAMERA)
     }
 
     private fun playVoiceNote(path: String) {
         val file = File(path)
-        if (!file.exists()) {
-            Toast.makeText(requireContext(), "❌ Fichier introuvable", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        if (isPlaying) {
-            mediaPlayer?.stop()
-            mediaPlayer?.release()
-            mediaPlayer = null
-            isPlaying = false
-            Toast.makeText(requireContext(), "⏹️ Lecture arretee", Toast.LENGTH_SHORT).show()
-            return
-        }
-
+        if (!file.exists()) { Toast.makeText(requireContext(), "❌ Fichier introuvable", Toast.LENGTH_SHORT).show(); return }
+        if (isPlaying) { mediaPlayer?.stop(); mediaPlayer?.release(); mediaPlayer = null; isPlaying = false; Toast.makeText(requireContext(), "⏹️ Lecture arretee", Toast.LENGTH_SHORT).show(); return }
         try {
             mediaPlayer = MediaPlayer().apply {
                 setDataSource(path)
                 prepare()
                 start()
-                setOnCompletionListener {
-                    isPlaying = false
-                    Toast.makeText(requireContext(), "✅ Termine !", Toast.LENGTH_SHORT).show()
-                }
+                setOnCompletionListener { isPlaying = false; Toast.makeText(requireContext(), "✅ Termine !", Toast.LENGTH_SHORT).show() }
             }
             isPlaying = true
             Toast.makeText(requireContext(), "▶️ Lecture...", Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(), "❌ Erreur : ${e.message}", Toast.LENGTH_SHORT).show()
-        }
+        } catch (e: Exception) { Toast.makeText(requireContext(), "❌ Erreur : ${e.message}", Toast.LENGTH_SHORT).show() }
     }
 
     private fun loadNotes() = filterNotes("")
-
     private fun filterNotes(query: String) {
         llNotes.removeAllViews()
         val notes = (activity as MainActivity).getNotes()
@@ -338,16 +295,13 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
             val title = note.optString("title", "")
             val content = note.optString("content", "")
             if (q.isNotEmpty() && !title.lowercase().contains(q) && !content.lowercase().contains(q)) continue
-
             val time = note.getLong("timestamp")
             val imageUri = note.optString("imageUri", "")
             val voicePath = note.optString("voicePath", "")
-
             val noteView = layoutInflater.inflate(R.layout.item_note, null)
             noteView.findViewById<TextView>(R.id.tvTitle).text = title
             noteView.findViewById<TextView>(R.id.tvContent).text = content
             noteView.findViewById<TextView>(R.id.tvDate).text = android.text.format.DateFormat.format("dd/MM/yyyy • HH:mm", time)
-
             val imgPreview = noteView.findViewById<ImageView>(R.id.ivPreview)
             if (imageUri.isNotEmpty()) {
                 try {
@@ -358,50 +312,30 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
                         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         startActivity(intent)
                     }
-                } catch (e: Exception) {
-                    imgPreview.visibility = android.view.View.GONE
-                }
-            } else {
-                imgPreview.visibility = android.view.View.GONE
-            }
-
+                } catch (e: Exception) { imgPreview.visibility = android.view.View.GONE }
+            } else imgPreview.visibility = android.view.View.GONE
             val voiceContainer = noteView.findViewById<LinearLayout>(R.id.llVoice)
             val btnPlayVoice = noteView.findViewById<Button>(R.id.btnPlayVoice)
             if (voicePath.isNotEmpty()) {
                 voiceContainer.visibility = android.view.View.VISIBLE
                 btnPlayVoice.setOnClickListener { playVoiceNote(voicePath) }
-            } else {
-                voiceContainer.visibility = android.view.View.GONE
-            }
-
-            noteView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
-                (activity as MainActivity).deleteNote(i)
-                loadNotes()
-                Toast.makeText(requireContext(), "🗑️ Note supprimee !", Toast.LENGTH_SHORT).show()
-            }
-
+            } else voiceContainer.visibility = android.view.View.GONE
+            noteView.findViewById<Button>(R.id.btnDelete).setOnClickListener { (activity as MainActivity).deleteNote(i); loadNotes(); Toast.makeText(requireContext(), "🗑️ Note supprimee !", Toast.LENGTH_SHORT).show() }
             llNotes.addView(noteView)
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        mediaPlayer?.apply { if (isPlaying) { stop(); release() } }
-        mediaPlayer = null
-        isPlaying = false
-    }
+    override fun onStop() { super.onStop(); mediaPlayer?.apply { if (isPlaying) { stop(); release() } }; mediaPlayer = null; isPlaying = false }
 }
 
 class MessagesFragment : Fragment(R.layout.fragment_messages) {
     private lateinit var llContacts: LinearLayout
-
     override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         llContacts = view.findViewById(R.id.llContacts)
         view.findViewById<Button>(R.id.btnAddContact).setOnClickListener { showAddDialog() }
         loadContacts()
     }
-
     private fun showAddDialog() {
         val v = layoutInflater.inflate(R.layout.dialog_add_contact, null)
         android.app.AlertDialog.Builder(requireContext())
@@ -410,13 +344,9 @@ class MessagesFragment : Fragment(R.layout.fragment_messages) {
             .setPositiveButton("Ajouter ✨") { _, _ ->
                 val n = v.findViewById<EditText>(R.id.etName).text.toString().trim()
                 val num = v.findViewById<EditText>(R.id.etNumber).text.toString().trim()
-                if (n.isNotEmpty() && num.isNotEmpty()) {
-                    (activity as MainActivity).saveContact(n, num)
-                    loadContacts()
-                }
+                if (n.isNotEmpty() && num.isNotEmpty()) { (activity as MainActivity).saveContact(n, num); loadContacts() }
             }.show()
     }
-
     private fun loadContacts() {
         llContacts.removeAllViews()
         val c = (activity as MainActivity).getContacts()
@@ -425,10 +355,7 @@ class MessagesFragment : Fragment(R.layout.fragment_messages) {
             val v = layoutInflater.inflate(R.layout.item_contact, null)
             v.findViewById<TextView>(R.id.tvName).text = contact.getString("name")
             v.findViewById<TextView>(R.id.tvNumber).text = contact.getString("number")
-            v.findViewById<Button>(R.id.btnDeleteContact).setOnClickListener {
-                (activity as MainActivity).deleteContact(i)
-                loadContacts()
-            }
+            v.findViewById<Button>(R.id.btnDeleteContact).setOnClickListener { (activity as MainActivity).deleteContact(i); loadContacts() }
             llContacts.addView(v)
         }
     }
