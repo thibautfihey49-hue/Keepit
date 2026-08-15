@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tabLayout: TabLayout
     private lateinit var prefs: SharedPreferences
     var isMessagingUnlocked = false
+    
+    // ✅ SECRET_TRIGGER en val (constante) — PAS de réassignation
     private val SECRET_TRIGGER = "sms"
 
     lateinit var pickImageLauncher: ActivityResultLauncher<String>
@@ -92,6 +94,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun checkSecretCode(content: String) {
+        // ✅ Comparaison insensible à la casse — SANS modifier SECRET_TRIGGER
         if (content.trim().lowercase() == SECRET_TRIGGER && !isMessagingUnlocked) {
             isMessagingUnlocked = true
             setupTabs()
