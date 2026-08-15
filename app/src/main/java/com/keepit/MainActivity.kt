@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != android.content.pm.PackageManager.PERMISSION_GRANTED
+            != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 this,
@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-// ============== ÉCRAN 1 : ACCUEIL GPS + NOTES ==============
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var tvTime: TextView
     private lateinit var tvStatus: TextView
@@ -128,18 +127,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 }
 
-// ============== ÉCRAN 2 : JOURNAL INTIME ==============
 class JournalFragment : Fragment(R.layout.fragment_journal) {
     override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(requireContext(), "💖 Journal Intime pret !", Toast.LENGTH_SHORT).show()
     }
 }
 
-// ============== ÉCRAN 3 : MESSAGES SÉCURISÉS ==============
 class MessagesFragment : Fragment(R.layout.fragment_messages) {
     override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(requireContext(), "🔒 Messages Securises pret !", Toast.LENGTH_SHORT).show()
     }
 }

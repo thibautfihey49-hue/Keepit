@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="3 secrets enregistres ✨"
+            android:text="3 secrets enregistres"
             android:textSize="14sp"
             android:textColor="#888888"
             android:gravity="center"/>
@@ -49,7 +49,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Tous ✨"
+                android:text="Tous"
                 android:backgroundTint="#FF1493"
                 android:textColor="#FFFFFF"/>
 
@@ -59,9 +59,7 @@
                 android:layout_weight="1"
                 android:text="Recents"
                 android:backgroundTint="#FFFFFF"
-                android:textColor="#FF1493"
-                android:strokeColor="#FF1493"
-                android:strokeWidth="2dp"/>
+                android:textColor="#FF1493"/>
 
             <Button
                 android:layout_width="0dp"
@@ -69,9 +67,7 @@
                 android:layout_weight="1"
                 android:text="Favoris"
                 android:backgroundTint="#FFFFFF"
-                android:textColor="#FF1493"
-                android:strokeColor="#FF1493"
-                android:strokeWidth="2dp"/>
+                android:textColor="#FF1493"/>
         </LinearLayout>
 
         <LinearLayout
@@ -81,12 +77,12 @@
             android:layout_marginTop="16dp"
             android:background="#E8EAF6"
             android:padding="16dp"
-            android:cornerRadius="16dp">
+            android:elevation="2dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="📌 Mon premier secret"
+                android:text="Mon premier secret"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#303F9F"/>
@@ -108,44 +104,10 @@
                 android:layout_marginTop="8dp"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="12dp"
-            android:background="#E8F5E9"
-            android:padding="16dp"
-            android:cornerRadius="16dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="🎀 Note vocale"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#2E7D32"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Appuie pour ecouter 🎤"
-                android:textSize="14sp"
-                android:textColor="#555555"
-                android:layout_marginTop="4dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="31 juil. 23:03"
-                android:textSize="12sp"
-                android:textColor="#888888"
-                android:layout_marginTop="8dp"/>
-        </LinearLayout>
-
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="+ Nouveau secret 💖"
+            android:text="+ Nouveau secret"
             android:backgroundTint="#FF1493"
             android:textColor="#FFFFFF"
             android:layout_marginTop="16dp"/>
