@@ -41,6 +41,8 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.activity:activity-ktx:1.8.2")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
 }
 
 configurations.all {
@@ -49,23 +51,10 @@ configurations.all {
             "androidx.core:core:1.12.0",
             "androidx.core:core-ktx:1.12.0",
             "androidx.appcompat:appcompat:1.6.1",
-            "androidx.appcompat:appcompat-resources:1.6.1",
             "com.google.android.material:material:1.11.0",
             "androidx.constraintlayout:constraintlayout:2.1.4",
-            "androidx.constraintlayout:constraintlayout-core:1.0.4",
-            "androidx.transition:transition:1.4.1",
-            "androidx.viewpager2:viewpager2:1.1.0",
-            "androidx.fragment:fragment:1.6.2",
             "androidx.activity:activity:1.8.2",
-            "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2",
-            "androidx.savedstate:savedstate:1.2.1",
-            "androidx.vectordrawable:vectordrawable:1.1.0",
-            "androidx.vectordrawable:vectordrawable-animated:1.1.0",
-            "androidx.drawerlayout:drawerlayout:1.1.1",
-            "androidx.coordinatorlayout:coordinatorlayout:1.1.0",
-            "androidx.recyclerview:recyclerview:1.3.2",
-            "androidx.cardview:cardview:1.0.0"
+            "androidx.fragment:fragment:1.6.2"
         )
-        preferProjectModules()
     }
 }
