@@ -28,10 +28,12 @@ import org.json.JSONObject
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
     private lateinit var prefs: SharedPreferences
     var isMessagingUnlocked = false
+    
     private val SECRET_TRIGGER = "sms"
 
     lateinit var pickImageLauncher: ActivityResultLauncher<String>
@@ -174,6 +176,7 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
     private lateinit var btnVoice: Button
     private lateinit var btnImage: Button
     private lateinit var btnCamera: Button
+    
     private var selectedImageUri: String? = null
     private var voiceFilePath: String? = null
     private var recorder: MediaRecorder? = null
