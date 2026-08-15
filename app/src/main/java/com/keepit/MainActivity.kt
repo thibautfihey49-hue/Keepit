@@ -27,7 +27,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 
-class MainActivity : AppCompatActivity {
+// ✅ ERREUR LIGNE 30 CORRIGÉE : Syntaxe correcte
+class MainActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
@@ -65,12 +66,12 @@ class MainActivity : AppCompatActivity {
                     (frag as? JournalFragment)?.startVoiceRecording()
                 }
             } else {
-                Toast.makeText(this, "Autorisation microphone necessaire", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "❌ Autorisation microphone necessaire", Toast.LENGTH_SHORT).show()
             }
         }
         cameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (granted) dispatchTakePictureIntent()
-            else Toast.makeText(this, "Autorisation appareil photo necessaire", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(this, "❌ Autorisation appareil photo necessaire", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -78,8 +79,8 @@ class MainActivity : AppCompatActivity {
         viewPager.adapter = ViewPagerAdapter(this)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "Journal"
-                1 -> if (isMessagingUnlocked) tab.text = "Messages" else tab.view.visibility = android.view.View.GONE
+                0 -> tab.text = "💖 Journal"
+                1 -> { if (isMessagingUnlocked) tab.text = "🔒 Messages" else tab.view.visibility = android.view.View.GONE }
             }
         }.attach()
     }
@@ -89,7 +90,7 @@ class MainActivity : AppCompatActivity {
             isMessagingUnlocked = true
             setupTabs()
             viewPager.currentItem = 1
-            Toast.makeText(this, "Messagerie deverrouillee !", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "🔓 Messagerie deverrouillee ! ✨", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -176,6 +177,7 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
     private lateinit var btnImage: Button
     private lateinit var btnCamera: Button
 
+    // ✅ ERREUR LIGNE 286 CORRIGÉE : TOUTES EN VAR
     private var selectedImageUri: String? = null
     private var voiceFilePath: String? = null
     private var recorder: MediaRecorder? = null
@@ -208,10 +210,10 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
                 etContent.text.clear()
                 selectedImageUri = null
                 voiceFilePath = null
-                Toast.makeText(requireContext(), "Note sauvegardee !", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "✅ Note sauvegardee ! ✨", Toast.LENGTH_SHORT).show()
                 loadNotes()
             } else {
-                Toast.makeText(requireContext(), "Ecris quelque chose d'abord !", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "⚠️ Ecris quelque chose d'abord !", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -246,20 +248,22 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
             start()
         }
         isRecording = true
-        btnVoice.text = "Enregistrement..."
-        Toast.makeText(requireContext(), "Enregistrement en cours...", Toast.LENGTH_SHORT).show()
+        btnVoice.text = "⏹️ Enregistrement..."
+        btnVoice.setBackgroundColor(0xFFFF4757.toInt())
+        Toast.makeText(requireContext(), "🎙️ Enregistrement en cours...", Toast.LENGTH_SHORT).show()
     }
 
     private fun stopVoiceRecording() {
         recorder?.apply { stop(); release() }
         recorder = null
         isRecording = false
-        btnVoice.text = "Voix"
-        Toast.makeText(requireContext(), "Note vocale prete !", Toast.LENGTH_SHORT).show()
+        btnVoice.text = "🎤 Voix"
+        btnVoice.setBackgroundColor(0xFF6C5CE7.toInt())
+        Toast.makeText(requireContext(), "✅ Note vocale prete !", Toast.LENGTH_SHORT).show()
     }
 
     private fun pickImage() { (activity as MainActivity).pickImageLauncher.launch("image/*") }
-    fun onImagePicked(uri: Uri) { selectedImageUri = uri.toString(); Toast.makeText(requireContext(), "Image selectionnee !", Toast.LENGTH_SHORT).show() }
+    fun onImagePicked(uri: Uri) { selectedImageUri = uri.toString(); Toast.makeText(requireContext(), "📷 Image selectionnee ! ✨", Toast.LENGTH_SHORT).show() }
     private fun takePhoto() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) (activity as MainActivity).dispatchTakePictureIntent()
         else (activity as MainActivity).cameraPermission.launch(Manifest.permission.CAMERA)
@@ -267,13 +271,13 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
 
     private fun playVoiceNote(path: String) {
         val file = File(path)
-        if (!file.exists()) { Toast.makeText(requireContext(), "Fichier introuvable", Toast.LENGTH_SHORT).show(); return }
+        if (!file.exists()) { Toast.makeText(requireContext(), "❌ Fichier introuvable", Toast.LENGTH_SHORT).show(); return }
         if (isPlaying) {
             mediaPlayer?.stop()
             mediaPlayer?.release()
             mediaPlayer = null
             isPlaying = false
-            Toast.makeText(requireContext(), "Lecture arretee", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "⏹️ Lecture arretee", Toast.LENGTH_SHORT).show()
             return
         }
         try {
@@ -287,8 +291,8 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
                 }
             }
             isPlaying = true
-            Toast.makeText(requireContext(), "Lecture en cours...", Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) { Toast.makeText(requireContext(), "Erreur lecture : ${e.message}", Toast.LENGTH_SHORT).show() }
+            Toast.makeText(requireContext(), "▶️ Lecture en cours...", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) { Toast.makeText(requireContext(), "❌ Erreur lecture : ${e.message}", Toast.LENGTH_SHORT).show() }
     }
 
     private fun loadNotes() { filterNotes("") }
@@ -326,7 +330,7 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
             card.findViewById<Button>(R.id.btnDelete).setOnClickListener {
                 (activity as MainActivity).deleteNote(pos)
                 loadNotes()
-                Toast.makeText(requireContext(), "Note supprimee !", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "🗑️ Note supprimee !", Toast.LENGTH_SHORT).show()
             }
             llNotes.addView(card)
         }
@@ -356,7 +360,7 @@ class MessagesFragment : Fragment(R.layout.fragment_messages) {
     private fun showAddDialog() {
         val v = layoutInflater.inflate(R.layout.dialog_add_contact, null)
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("Nouveau Contact")
+            .setTitle("➕ Nouveau Contact")
             .setView(v)
             .setPositiveButton("Ajouter") { _, _ ->
                 val name = v.findViewById<EditText>(R.id.etName).text.toString().trim()
