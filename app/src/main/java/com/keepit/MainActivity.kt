@@ -2,6 +2,7 @@ package com.keepit
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
@@ -33,9 +34,10 @@ class MainActivity : AppCompatActivity() {
     var isMessagingUnlocked = false
     private val SECRET_TRIGGER = "SMS"
 
-    lateinit var pickImageLauncher: ActivityResultLauncher<Array<String>>
+    lateinit var pickImageLauncher: ActivityResultLauncher<String>
     lateinit var recordAudioPermission: ActivityResultLauncher<String>
     lateinit var cameraPermission: ActivityResultLauncher<String>
+    private var pendingPhotoFile: File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +52,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupPermissionLaunchers() {
-        pickImageLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
-                contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 supportFragmentManager.findFragmentById(R.id.viewPager)?.let { frag ->
                     (frag as? JournalFragment)?.onImagePicked(it)
                 }
@@ -71,9 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         cameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (granted) {
-                supportFragmentManager.findFragmentById(R.id.viewPager)?.let { frag ->
-                    (frag as? JournalFragment)?.dispatchTakePictureIntent()
-                }
+                dispatchTakePictureIntent()
             } else {
                 Toast.makeText(this, "❌ Autorisation appareil photo necessaire", Toast.LENGTH_SHORT).show()
             }
@@ -132,7 +131,7 @@ class MainActivity : AppCompatActivity() {
     fun saveContact(name: String, num: String) {
         val contacts = JSONArray(prefs.getString("contacts", "[]"))
         val c = JSONObject()
-        c.put("name", num)
+        c.put("name", name)
         c.put("number", num)
         contacts.put(c)
         prefs.edit().putString("contacts", contacts.toString()).apply()
@@ -145,9 +144,33 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getContacts(): JSONArray = JSONArray(prefs.getString("contacts", "[]"))
+
+    fun takePhotoIntent() {
+        val photoDir = File(filesDir, "photos")
+        photoDir.mkdirs()
+        pendingPhotoFile = File(photoDir, "photo_${System.currentTimeMillis()}.jpg")
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            val photoURI = FileProvider.getUriForFile(this, "$packageName.fileprovider", pendingPhotoFile!!)
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+            startActivityForResult(takePictureIntent, 1002)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1002 && resultCode == RESULT_OK) {
+            pendingPhotoFile?.let { file ->
+                val uri = Uri.fromFile(file).toString()
+                supportFragmentManager.findFragmentById(R.id.viewPager)?.let { frag ->
+                    (frag as? JournalFragment)?.onImagePicked(Uri.parse(uri))
+                }
+            }
+        }
+    }
 }
 
-// ============== FRAGMENT JOURNAL — NOTES VOCALES + IMAGES ==============
+// ============== FRAGMENT JOURNAL ==============
 class JournalFragment : Fragment(R.layout.fragment_journal) {
     private lateinit var prefs: SharedPreferences
     private lateinit var llNotes: LinearLayout
@@ -162,7 +185,6 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
     private var voiceFilePath: String? = null
     private var recorder: MediaRecorder? = null
     private var isRecording = false
-    private var photoFile: File? = null
 
     override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -240,19 +262,16 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
     }
 
     private fun stopVoiceRecording() {
-        recorder?.apply {
-            stop()
-            release()
-        }
+        recorder?.apply { stop(); release() }
         recorder = null
         isRecording = false
-        btnVoice.text = "🎤 Note Vocale"
+        btnVoice.text = "🎤 Voix"
         btnVoice.setBackgroundColor(0xFFFF4081.toInt())
         Toast.makeText(requireContext(), "✅ Enregistrement sauvegarde", Toast.LENGTH_SHORT).show()
     }
 
     private fun pickImage() {
-        (activity as MainActivity).pickImageLauncher.launch(arrayOf("image/*"))
+        (activity as MainActivity).pickImageLauncher.launch("image/*")
     }
 
     fun onImagePicked(uri: Uri) {
@@ -262,29 +281,9 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
 
     private fun takePhoto() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            dispatchTakePictureIntent()
+            (activity as MainActivity).takePhotoIntent()
         } else {
             (activity as MainActivity).cameraPermission.launch(Manifest.permission.CAMERA)
-        }
-    }
-
-    fun dispatchTakePictureIntent() {
-        val photoDir = File(requireContext().filesDir, "photos")
-        photoDir.mkdirs()
-        photoFile = File(photoDir, "photo_${System.currentTimeMillis()}.jpg")
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent.resolveActivity(requireContext().packageManager) != null) {
-            val photoURI = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.fileprovider", photoFile!!)
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-            startActivityForResult(takePictureIntent, 1002)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1002 && resultCode == -1) {
-            photoFile?.let { selectedImageUri = Uri.fromFile(it).toString() }
-            Toast.makeText(requireContext(), "📸 Photo capturee", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -316,8 +315,7 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
             } else imgPreview.visibility = android.view.View.GONE
 
             val voiceIcon = noteView.findViewById<TextView>(R.id.tvVoice)
-            if (voicePath.isNotEmpty()) voiceIcon.visibility = android.view.View.VISIBLE
-            else voiceIcon.visibility = android.view.View.GONE
+            voiceIcon.visibility = if (voicePath.isNotEmpty()) android.view.View.VISIBLE else android.view.View.GONE
 
             noteView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
                 (activity as MainActivity).deleteNote(i)

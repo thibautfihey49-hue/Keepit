@@ -48,7 +48,7 @@
             android:id="@+id/etContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contenu... (ecris SMS pour deverrouiller la messagerie)"
+            android:hint="Contenu... (ecris SMS pour deverrouiller)"
             android:minLines="4"
             android:background="#FFFFFF"
             android:padding="12dp"/>
