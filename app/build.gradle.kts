@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    id("com.android.application") version "8.2.0"
+    id("org.jetbrains.kotlin.android") version "1.9.20"
 }
 
 android {
@@ -24,7 +24,6 @@ android {
         }
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
@@ -42,10 +41,6 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.transition:transition:1.4.1")
-    implementation("androidx.viewpager2:viewpager2:1.1.0")
-    implementation("androidx.fragment:fragment:1.6.2")
-    implementation("androidx.activity:activity:1.8.2")
 }
 
 configurations.all {
