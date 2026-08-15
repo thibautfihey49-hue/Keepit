@@ -1,4 +1,4 @@
-name: Build Keepit — Auto
+name: Build Keepit — Auto-fix
 on:
   push:
     branches: [main]
@@ -10,20 +10,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # 🪄 GITHUB TÉLÉCHARGE LE .JAR LUI-MÊME
       - name: Télécharger gradle-wrapper.jar
         run: |
           curl -L -o gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.5.0/gradle/wrapper/gradle-wrapper.jar
           chmod +x gradlew
+          ls -lh gradle/wrapper/gradle-wrapper.jar
 
       - uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Compiler APK
+      - name: 🔨 Compiler APK
         run: ./gradlew clean assembleDebug --no-daemon
 
-      - uses: actions/upload-artifact@v4
+      - name: ✅ APK Prêt
+        uses: actions/upload-artifact@v4
         with:
           name: Keepit-APK-Debug
           path: app/build/outputs/apk/debug/app-debug.apk
