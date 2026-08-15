@@ -1,0 +1,2 @@
+build/ .gradle/ app/build/ .idea/ *.iml /build /local.properties
+.DS_Store Thumbs.db *.jks *.keystore
