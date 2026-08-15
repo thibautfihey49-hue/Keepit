@@ -9,108 +9,79 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
         android:spacing="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="💖 Journal Intime"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="#FF69B4"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="3 secrets enregistres"
+            android:text="💖 Mon Journal Intime"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#FF1493"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tes secrets sont sauvegardes en securite"
             android:textSize="14sp"
             android:textColor="#888888"
             android:gravity="center"/>
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Rechercher un secret..."
+            android:text="➕ Nouvelle note"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#FF1493"
+            android:layout_marginTop="8dp"/>
+
+        <EditText
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Titre..."
             android:background="#FFFFFF"
             android:padding="12dp"
             android:textColor="#333333"
-            android:layout_marginTop="8dp"/>
+            android:inputType="textCapSentences"/>
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/etContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:spacing="8dp"
-            android:layout_marginTop="8dp">
+            android:hint="Ecris ton secret..."
+            android:minLines="5"
+            android:background="#FFFFFF"
+            android:padding="12dp"
+            android:textColor="#333333"/>
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tous"
-                android:backgroundTint="#FF1493"
-                android:textColor="#FFFFFF"/>
+        <Button
+            android:id="@+id/btnSaveNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="💾 Sauvegarder la note"
+            android:backgroundTint="#FF1493"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="8dp"/>
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Recents"
-                android:backgroundTint="#FFFFFF"
-                android:textColor="#FF1493"/>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Favoris"
-                android:backgroundTint="#FFFFFF"
-                android:textColor="#FF1493"/>
-        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📚 Tes notes"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#FF1493"
+            android:layout_marginTop="24dp"/>
 
         <LinearLayout
+            android:id="@+id/llNotes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:background="#E8EAF6"
-            android:padding="16dp"
-            android:elevation="2dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mon premier secret"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#303F9F"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ceci est mon contenu secret..."
-                android:textSize="14sp"
-                android:textColor="#555555"
-                android:layout_marginTop="4dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="04 aout 11:07"
-                android:textSize="12sp"
-                android:textColor="#888888"
-                android:layout_marginTop="8dp"/>
-        </LinearLayout>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="+ Nouveau secret"
-            android:backgroundTint="#FF1493"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="16dp"/>
+            android:spacing="12dp"
+            android:layout_marginTop="8dp"/>
 
     </LinearLayout>
 </ScrollView>
