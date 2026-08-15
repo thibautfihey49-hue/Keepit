@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun checkSecretCode(content: String) {
-        // ✅ COMPARAISON UNIQUEMENT — SANS MODIFICATION
+        // ✅ COMPARAISON UNIQUEMENT — SANS AUCUNE MODIFICATION
         if (content.trim().lowercase() == SECRET_TRIGGER && !isMessagingUnlocked) {
             isMessagingUnlocked = true
             setupTabs()
