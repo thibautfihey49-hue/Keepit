@@ -3,49 +3,78 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#FFFFFF"
-    android:padding="16dp"
-    android:elevation="2dp">
+    android:background="@drawable/note_card_bg"
+    android:padding="18dp"
+    android:elevation="6dp">
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="17sp"
         android:textStyle="bold"
-        android:textColor="#FF1493"/>
+        android:textColor="#FFFFFF"
+        android:maxLines="1"
+        android:ellipsize="end"/>
 
     <TextView
         android:id="@+id/tvContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="#333333"
-        android:layout_marginTop="4dp"/>
+        android:textColor="#DDDDDD"
+        android:layout_marginTop="8dp"
+        android:lineSpacingExtra="4dp"
+        android:maxLines="6"
+        android:ellipsize="end"/>
 
     <ImageView
         android:id="@+id/ivPreview"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="12dp"
         android:scaleType="centerCrop"
+        android:background="@drawable/image_placeholder"
         android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/tvVoice"
+    <LinearLayout
+        android:id="@+id/llVoice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🎙️ Note vocale incluse"
-        android:textSize="13sp"
-        android:textColor="#FF1493"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:background="#2A2A3C"
+        android:padding="12dp"
+        android:layout_marginBottom="4dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="🎙️ Note vocale"
+            android:textSize="14sp"
+            android:textColor="#FFD93D"/>
+
+        <Button
+            android:id="@+id/btnPlayVoice"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="▶️ Ecouter"
+            android:textSize="13sp"
+            android:background="@drawable/btn_play_bg"
+            android:textColor="#FFFFFF"
+            android:paddingHorizontal="16dp"
+            android:elevation="2dp"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="14dp"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/tvDate"
@@ -53,17 +82,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="12sp"
-            android:textColor="#AAAAAA"/>
+            android:textColor="#888888"/>
 
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🗑️"
-            android:backgroundTint="#F44336"
+            android:layout_height="36dp"
+            android:text="🗑️ Supprimer"
+            android:textSize="13sp"
+            android:background="@drawable/btn_delete_bg"
             android:textColor="#FFFFFF"
-            android:minWidth="40dp"
-            android:paddingHorizontal="8dp"/>
+            android:paddingHorizontal="16dp"
+            android:elevation="2dp"/>
     </LinearLayout>
 
 </LinearLayout>

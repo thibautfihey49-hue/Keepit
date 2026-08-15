@@ -1,32 +1,27 @@
-name: Build Keepit — Camera-Fixed
+name: Build Keepit — Neon-Adm ✨
 on:
   push:
     branches: [main]
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Telecharger gradle-wrapper.jar
+      - name: Download gradle-wrapper.jar
         run: |
           mkdir -p gradle/wrapper
           curl -fsSL -o gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.5.0/gradle/wrapper/gradle-wrapper.jar
           chmod +x gradlew
-
       - uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: Compiler APK
+      - name: Build APK
         run: ./gradlew clean assembleDebug --no-daemon
-
-      - name: APK Generee
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Keepit-Camera-Fixed
+          name: Keepit-Neon-Adm ✨
           path: app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30

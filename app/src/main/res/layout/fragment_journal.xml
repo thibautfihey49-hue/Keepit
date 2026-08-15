@@ -2,114 +2,162 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF0F5"
-    android:padding="16dp">
+    android:background="@android:color/transparent"
+    android:padding="16dp"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:spacing="16dp">
+        android:spacing="20dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="💖 Mon Journal Intime"
-            android:textSize="28sp"
+            android:text="💖 Keepit"
+            android:textSize="36sp"
             android:textStyle="bold"
-            android:textColor="#FF1493"
-            android:gravity="center"/>
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:shadowColor="#FF6B9D"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="12"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mon journal intime ✨"
+            android:textSize="16sp"
+            android:textColor="#CCCCCC"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"/>
 
         <EditText
             android:id="@+id/etSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="🔍 Rechercher..."
-            android:background="#FFFFFF"
-            android:padding="12dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="➕ Nouvelle note"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#FF1493"/>
-
-        <EditText
-            android:id="@+id/etTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Titre..."
-            android:background="#FFFFFF"
-            android:padding="12dp"/>
-
-        <EditText
-            android:id="@+id/etContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Contenu... (ecris SMS pour deverrouiller)"
-            android:minLines="4"
-            android:background="#FFFFFF"
-            android:padding="12dp"/>
+            android:hintTextColor="#888888"
+            android:background="@drawable/input_bg"
+            android:textColor="#FFFFFF"
+            android:padding="16dp"
+            android:textSize="15sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:spacing="8dp">
+            android:background="@drawable/card_bg"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:layout_marginTop="8dp"
+            android:elevation="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="✏️ Nouvelle Note"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="16dp"/>
+
+            <EditText
+                android:id="@+id/etTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Titre..."
+                android:hintTextColor="#888888"
+                android:background="@drawable/input_bg"
+                android:textColor="#FFFFFF"
+                android:padding="14dp"
+                android:textSize="16sp"
+                android:layout_marginBottom="12dp"/>
+
+            <EditText
+                android:id="@+id/etContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ce que je pense aujourd'hui... (ecris sms pour deverrouiller 🔓)"
+                android:hintTextColor="#888888"
+                android:minLines="5"
+                android:background="@drawable/input_bg"
+                android:textColor="#FFFFFF"
+                android:padding="14dp"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:spacing="10dp"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/btnVoice"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:text="🎤"
+                    android:textSize="20sp"
+                    android:background="@drawable/btn_voice_bg"
+                    android:textColor="#FFFFFF"
+                    android:elevation="4dp"/>
+
+                <Button
+                    android:id="@+id/btnImage"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:text="🖼️"
+                    android:textSize="20sp"
+                    android:background="@drawable/btn_image_bg"
+                    android:textColor="#FFFFFF"
+                    android:elevation="4dp"/>
+
+                <Button
+                    android:id="@+id/btnCamera"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:text="📷"
+                    android:textSize="20sp"
+                    android:background="@drawable/btn_camera_bg"
+                    android:textColor="#FFFFFF"
+                    android:elevation="4dp"/>
+            </LinearLayout>
 
             <Button
-                android:id="@+id/btnVoice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="🎤 Voix"
-                android:backgroundTint="#FF4081"
-                android:textColor="#FFFFFF"/>
-
-            <Button
-                android:id="@+id/btnImage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="🖼️ Image"
-                android:backgroundTint="#FF4081"
-                android:textColor="#FFFFFF"/>
-
-            <Button
-                android:id="@+id/btnCamera"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="📷 Photo"
-                android:backgroundTint="#FF4081"
-                android:textColor="#FFFFFF"/>
+                android:id="@+id/btnSaveNote"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="💾 Sauvegarder la note"
+                android:textSize="16sp"
+                android:background="@drawable/btn_save_bg"
+                android:textColor="#FFFFFF"
+                android:elevation="6dp"/>
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btnSaveNote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="💾 Sauvegarder la note"
-            android:backgroundTint="#FF1493"
-            android:textColor="#FFFFFF"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📚 Mes notes"
-            android:textSize="18sp"
+            android:text="📚 Mes Notes"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#FF1493"
-            android:layout_marginTop="24dp"/>
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
 
         <LinearLayout
             android:id="@+id/llNotes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:spacing="12dp"/>
+            android:spacing="16dp"
+            android:layout_marginBottom="32dp"/>
 
     </LinearLayout>
 </ScrollView>

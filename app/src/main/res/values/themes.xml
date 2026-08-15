@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Keepit" parent="Theme.Material3.Light.NoActionBar">
-        <item name="colorPrimary">#FF1493</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="android:windowBackground">#FFF0F5</item>
+    <style name="Theme.Keepit" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_gradient</item>
+        <item name="colorPrimary">@color/accent_purple</item>
+        <item name="colorOnPrimary">@color/text_primary</item>
+        <item name="colorSecondary">@color/accent_pink</item>
+        <item name="android:statusBarColor">@color/bg_dark</item>
+        <item name="android:navigationBarColor">@color/bg_dark</item>
+    </style>
+    <style name="TabText" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>
