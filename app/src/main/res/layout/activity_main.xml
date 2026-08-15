@@ -13,8 +13,7 @@
         android:background="#FF1493"
         app:tabTextColor="#FFFFFF"
         app:tabSelectedTextColor="#FFFFFF"
-        app:tabIndicatorColor="#FFFFFF"
-        app:tabMode="fixed"/>
+        app:tabIndicatorColor="#FFFFFF"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"

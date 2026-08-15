@@ -23,12 +23,47 @@
         android:textColor="#333333"
         android:layout_marginTop="4dp"/>
 
+    <ImageView
+        android:id="@+id/ivPreview"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"/>
+
     <TextView
-        android:id="@+id/tvDate"
+        android:id="@+id/tvVoice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:textColor="#AAAAAA"
-        android:layout_marginTop="8dp"/>
+        android:text="🎙️ Note vocale incluse"
+        android:textSize="13sp"
+        android:textColor="#FF1493"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp">
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:textColor="#AAAAAA"/>
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🗑️"
+            android:backgroundTint="#F44336"
+            android:textColor="#FFFFFF"
+            android:minWidth="40dp"
+            android:paddingHorizontal="8dp"/>
+    </LinearLayout>
 
 </LinearLayout>

@@ -20,13 +20,13 @@
             android:textColor="#FF1493"
             android:gravity="center"/>
 
-        <TextView
+        <EditText
+            android:id="@+id/etSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tes secrets sont sauvegardes en securite"
-            android:textSize="14sp"
-            android:textColor="#888888"
-            android:gravity="center"/>
+            android:hint="🔍 Rechercher..."
+            android:background="#FFFFFF"
+            android:padding="12dp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -34,8 +34,7 @@
             android:text="➕ Nouvelle note"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#FF1493"
-            android:layout_marginTop="8dp"/>
+            android:textColor="#FF1493"/>
 
         <EditText
             android:id="@+id/etTitle"
@@ -43,19 +42,50 @@
             android:layout_height="wrap_content"
             android:hint="Titre..."
             android:background="#FFFFFF"
-            android:padding="12dp"
-            android:textColor="#333333"
-            android:inputType="textCapSentences"/>
+            android:padding="12dp"/>
 
         <EditText
             android:id="@+id/etContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ecris ton secret..."
-            android:minLines="5"
+            android:hint="Contenu... (ecris SMS pour deverrouiller la messagerie)"
+            android:minLines="4"
             android:background="#FFFFFF"
-            android:padding="12dp"
-            android:textColor="#333333"/>
+            android:padding="12dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:spacing="8dp">
+
+            <Button
+                android:id="@+id/btnVoice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="🎤 Voix"
+                android:backgroundTint="#FF4081"
+                android:textColor="#FFFFFF"/>
+
+            <Button
+                android:id="@+id/btnImage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="🖼️ Image"
+                android:backgroundTint="#FF4081"
+                android:textColor="#FFFFFF"/>
+
+            <Button
+                android:id="@+id/btnCamera"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="📷 Photo"
+                android:backgroundTint="#FF4081"
+                android:textColor="#FFFFFF"/>
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnSaveNote"
@@ -63,13 +93,12 @@
             android:layout_height="wrap_content"
             android:text="💾 Sauvegarder la note"
             android:backgroundTint="#FF1493"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="8dp"/>
+            android:textColor="#FFFFFF"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📚 Tes notes"
+            android:text="📚 Mes notes"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="#FF1493"
@@ -80,8 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:spacing="12dp"
-            android:layout_marginTop="8dp"/>
+            android:spacing="12dp"/>
 
     </LinearLayout>
 </ScrollView>

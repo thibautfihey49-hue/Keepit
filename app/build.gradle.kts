@@ -16,24 +16,15 @@ android {
     }
 
     buildTypes {
-        debug {
-            isDebuggable = true
-            isMinifyEnabled = false
-            applicationIdSuffix = ".debug"
-            versionNameSuffix = "-debug"
-        }
-        release {
-            isMinifyEnabled = false
-        }
+        debug { isDebuggable = true; isMinifyEnabled = false; applicationIdSuffix = ".debug" }
+        release { isMinifyEnabled = false }
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+    kotlinOptions { jvmTarget = "17" }
 }
 
 dependencies {
@@ -44,19 +35,4 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.activity:activity-ktx:1.8.2")
-}
-
-configurations.all {
-    resolutionStrategy {
-        force(
-            "androidx.core:core:1.12.0",
-            "androidx.core:core-ktx:1.12.0",
-            "androidx.appcompat:appcompat:1.6.1",
-            "com.google.android.material:material:1.11.0",
-            "androidx.constraintlayout:constraintlayout:2.1.4",
-            "androidx.viewpager2:viewpager2:1.0.0",
-            "androidx.fragment:fragment:1.6.2",
-            "androidx.activity:activity:1.8.2"
-        )
-    }
 }

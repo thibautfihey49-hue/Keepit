@@ -5,22 +5,6 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:spacing="12dp">
-
-    <EditText
-        android:id="@+id/etName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nom du contact"
-        android:background="#FFFFFF"
-        android:padding="12dp"/>
-
-    <EditText
-        android:id="@+id/etNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Numero de telephone"
-        android:inputType="phone"
-        android:background="#FFFFFF"
-        android:padding="12dp"/>
-
+    <EditText android:id="@+id/etName" android:hint="Nom" android:background="#FFFFFF" android:padding="12dp"/>
+    <EditText android:id="@+id/etNumber" android:hint="Numero" android:inputType="phone" android:background="#FFFFFF" android:padding="12dp"/>
 </LinearLayout>
